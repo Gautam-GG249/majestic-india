@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Tours</title>
+    <style>
+        :root {
+            --primary-color: #FF6B00;
+            --secondary-color: #2C3E50;
+            --accent-color: #27AE60;
+            --background-color: #F4F4F4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .navbar-item {
+            position: relative;
+            margin-left: 25px;
+        }
+
+        .navbar-link {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            padding: 8px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 15px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+            padding-left: 20px;
+        }
+
+        .navbar-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-btn:hover {
+            background-color: #e65c00;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.pakkaoffer.com/blog/wp-content/uploads/2021/11/63-Best-Tourist-Places-To-Visit-In-India-For-A-Perfect-Holiday-In-2020.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 70px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        /* Packages Section */
+        .packages {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .package-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .package-content {
+            padding: 20px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-menu.active {
+                display: block;
+            }
+
+            .navbar-item {
+                margin: 10px 0;
+            }
+
+            .dropdown {
+                position: static;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                padding-left: 15px;
+            }
+
+            .navbar-item:hover .dropdown {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">
+                <i class="fas fa-map-marked-alt"></i> Majestic India
+            </a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="../webpages/home.html" class="navbar-link">Home</a>
+                    <div class="dropdown">
+                        <a href="../webpages/features.html" class="dropdown-item">Featured Tours</a>
+                    </div>
+                </li>
+                <li class="navbar-item">
+                    <a href="#packages" class="navbar-link">Packages</a>
+                    <div class="dropdown">
+                        <a href="../webpages/goldentours.html" class="dropdown-item">Golden Triangle Tour</a>
+                        <a href="../webpages/keralabackwaters.html" class="dropdown-item">Kerala Backwaters</a>
+                    </div>
+                </li>
+                <li class="navbar-item">
+                    <a href="#places" class="navbar-link">Places</a>
+                    <div class="dropdown">
+                        <a href="../webpages/northindia.html" class="dropdown-item">North India</a>
+                        <a href="../webpages/southindia.html" class="dropdown-item">South India</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- Packages Section -->
+    <section class="packages" id="packages">
+        <div class="container">
+            <div class="section-title">
+                <h2>featured tours</h2>
+
+            </div>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <img src="../images/goa.jpg" alt="" class="" height="155" width="250">
+                    <div class="package-content">
+
+                        <h3>GOA</h3>
+                        <p>Goa is a state in western India with coastlines stretching along the Arabian Sea. Its long
+                            history as a Portuguese colony prior to 1961 is evident in its preserved 17th-century
+                            churches and the area’s tropical spice plantations.
+                        </p>
+                    </div>
+                </div>
+                <div class="package-card">
+                    <img src="../images/jaipur.jpg" alt="" class="" height="155" width="250">
+                    <div class="package-content">
+                        <h3>jaipur in rajastan</h3>
+                        <p>Jaipur is the capital of India’s Rajasthan state. It evokes the royal family that once ruled
+                            the region and that, in 1727, founded what is now called the Old City, or “Pink City” for
+                            its trademark building color. At the center of its stately street grid (notable in India)
+                            stands the opulent, colonnaded City Palace complex. With gardens, courtyards and museums,
+                            part of it is still a royal residence.</p>
+                    </div>
+                </div>
+                <div class="package-card">
+                    <img src="../images/manali.jpg" alt="" class="" height="155" width="250">
+                    <div class="package-content">
+                        <h3>manali</h3>
+                        <p>Manali is a high-altitude Himalayan resort town in India’s northern Himachal Pradesh state.
+                            It has a reputation as a backpacking center and honeymoon destination. Set on the Beas
+                            River, it’s a gateway for skiing in the Solang Valley and trekking in Parvati Valley. It's
+                            also a jumping-off point for paragliding, rafting and mountaineering in the Pir Panjal
+                            mountains, home to 4,000m-high Rohtang Pass.</p>
+                    </div>
+                    </div>
+
+
+
+                    <div class="package-card">
+                        <img src="../images/shimla.jpg" alt="" class="" height="155" width="250">
+                        <div class="package-content">
+                            <h3>shimla</h3>
+                            <p>Shimla is the capital of the northern Indian state of Himachal Pradesh, in the Himalayan
+                                foothills. Once the summer capital of British India, it remains the terminus of the
+                                narrow-gauge Kalka-Shimla Railway, completed in 1903. It’s also known for the handicraft
+                                shops that line The Mall, a pedestrian avenue, as well as the Lakkar Bazaar, a market
+                                specializing in wooden toys and crafts.</p>
+                        </div>
+
+                        </div>
+
+
+                        <div class="package-card">
+                            <img src="../images/mumbai.jpg" alt="" class="" height="155" width="250">
+                            <div class="package-content">
+                                <h3>mumbai</h3>
+                                <p>Mumbai (formerly called Bombay) is a densely populated city on India’s west coast. A
+                                    financial center, it's India's largest city. On the Mumbai Harbour waterfront stands
+                                    the iconic Gateway of India stone arch, built by the British Raj in 1924. Offshore,
+                                    nearby Elephanta Island holds ancient cave temples dedicated to the Hindu god Shiva.
+                                    The city's also famous as the heart of the Bollywood film industry.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+    </section>
+
+
+</body>
+
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Tours</title>
+    <style>
+        :root {
+            --primary-color: #FF6B00;
+            --secondary-color: #2C3E50;
+            --accent-color: #27AE60;
+            --background-color: #F4F4F4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .navbar-item {
+            position: relative;
+            margin-left: 25px;
+        }
+
+        .navbar-link {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            padding: 8px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 15px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+            padding-left: 20px;
+        }
+
+        .navbar-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-btn:hover {
+            background-color: #e65c00;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.pakkaoffer.com/blog/wp-content/uploads/2021/11/63-Best-Tourist-Places-To-Visit-In-India-For-A-Perfect-Holiday-In-2020.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 70px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        /* Packages Section */
+        .packages {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .package-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .package-content {
+            padding: 20px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 10rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .destination-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section {
+            background-color: #f5f5f5;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: #e6a644;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #d49535;
+        }
+
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-menu.active {
+                display: block;
+            }
+
+            .navbar-item {
+                margin: 10px 0;
+            }
+
+            .dropdown {
+                position: static;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                padding-left: 15px;
+            }
+
+            .navbar-item:hover .dropdown {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">
+                <i class="fas fa-map-marked-alt"></i> Majestic India
+            </a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="../webpages/home.html" class="navbar-link">Home</a>
+                    <div class="dropdown">
+                        <a href="../webpages/features.html" class="dropdown-item">Featured Tours</a>
+                    </div>
+                </li>
+                <li class="navbar-item">
+                    <a href="#packages" class="navbar-link">Packages</a>
+                    <div class="dropdown">
+                        <a href="../webpages/goldentours.html" class="dropdown-item">Golden Triangle Tour</a>
+                        <a href="../webpages/keralabackwaters.html" class="dropdown-item">Kerala Backwaters</a>
+                    </div>
+                </li>
+                <li class="navbar-item">
+                    <a href="#places" class="navbar-link">Places</a>
+                    <div class="dropdown">
+                        <a href="../webpages/northindia.html" class="dropdown-item">North India</a>
+                        <a href="../webpages/southindia.html" class="dropdown-item">South India</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- Packages Section -->
+    <section class="destination-grid" id="destinations">
+        <div class="destination-card">
+            <img src="../images/delhi.jpg" alt="Delhi landmarks">
+            <div class="card-content">
+                <h3>Delhi</h3>
+                <p>Explore the perfect blend of old and new in India's capital. Visit the Red Fort, Qutub Minar, and experience the bustling streets of Chandni Chowk.</p>
+            </div>
+        </div>
+
+        <div class="destination-card">
+            <img src="../images/tajmahal.jpeg" alt="Taj Mahal">
+            <div class="card-content">
+                <h3>Agra</h3>
+                <p>Witness the breathtaking Taj Mahal, explore Agra Fort, and discover the rich Mughal heritage in the city of eternal love.</p>
+            </div>
+        </div>
+
+        <div class="destination-card">
+            <img src="../images/pinkcity.jpg" alt="Jaipur palace">
+            <div class="card-content">
+                <h3>Jaipur</h3>
+                <p>Immerse yourself in the Pink City's royal charm. Visit the Amber Fort, City Palace, and experience traditional Rajasthani culture.</p>
+            </div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>
